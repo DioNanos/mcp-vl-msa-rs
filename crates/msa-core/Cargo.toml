@@ -3,6 +3,9 @@ name = "msa-core"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+authors.workspace = true
+repository.workspace = true
+keywords.workspace = true
 description = "MSA-flavor retrieval engine library: chunking, tantivy BM25, and optional dense rerank"
 
 [features]
