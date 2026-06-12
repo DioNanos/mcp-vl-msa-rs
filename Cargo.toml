@@ -3,7 +3,7 @@ resolver = "2"
 members = ["crates/msa-core", "crates/mcp-msa-server", "crates/msa-bench"]
 
 [workspace.package]
-version = "0.4.0"
+version = "0.4.1"
 edition = "2021"
 license = "Apache-2.0"
 authors = ["DioNanos <dev@mmmbuto.com>"]
