@@ -13,6 +13,19 @@ with no cloud account and no embedding service required. Use it to give an
 agent durable recall over a knowledge base, a docs tree, or its own chat
 history — retrieval that returns the original text, not just embeddings.
 
+It is one half of a two-part memory: this server is the **library** (corpus
+recall), its companion [mcp-memory-rs](https://github.com/DioNanos/mcp-memory-rs)
+is the **notebook** (curated state). An agent that swaps models loses neither.
+
+```mermaid
+flowchart LR
+    A["AI agent<br/>(any MCP client)"]
+    A -->|"curated state<br/>read / write / sync"| M["mcp-memory-rs<br/><i>the notebook</i>"]
+    A -->|"corpus recall<br/>index / search / fetch"| V["mcp-vl-msa-rs<br/><i>the library</i>"]
+    M --- D1[("JSON categories<br/>SQLite FTS5")]
+    V --- D2[("tantivy BM25<br/>collections")]
+```
+
 **The name**: `msa` is the retrieval pattern it borrows from the Memory Sparse
 Attention paper (arXiv:2603.23516) — an *extrinsic* approximation, not the
 neural model; distinct from MiniMax's MSA-architecture LLMs, which are
@@ -87,7 +100,7 @@ cd mcp-vl-msa-rs
 cargo build --release
 cargo test
 
-# Hybrid sparse + dense (Ollama-compatible embedding service required)
+# Hybrid sparse + dense (in-process Candle rerank, no external service)
 cargo build --release --features embeddings
 cargo test  --features embeddings
 ```
@@ -98,6 +111,11 @@ Add `[embeddings]` to `MCP_MSA_CONFIG` to activate dense rerank. Without
 this section the server stays in BM25-only mode even when the binary was
 built with `--features embeddings`.
 
+The production backend is `candle-modernbert`: the encoder runs **in-process**
+(Candle), offline-deterministic, from a local model bundle — no daemon, no
+network at runtime, no automatic downloads. Prepare the bundle once with
+`scripts/prepare-granite-r2-97m.sh`.
+
 ```toml
 [storage]
 storage_dir = "~/.local/state/mcp-vl-msa-rs"
@@ -107,11 +125,15 @@ chunk_size = 64
 overlap = 0
 
 [embeddings]
-backend = "ollama"
-url     = "http://127.0.0.1:11434"
-model   = "nomic-embed-text"
-dim     = 768
+backend   = "candle-modernbert"
+model_dir = "~/.local/share/mcp-vl-msa-rs/models/granite-r2-97m"
+dim       = 768
+model_id  = "granite-r2-97m"
 ```
+
+A transitional `backend = "ollama"` (HTTP to an Ollama-compatible service)
+still exists but is **deprecated and scheduled for removal in v0.6** — do not
+build new setups on it.
 
 The AI client opts into hybrid scoring per-call by passing `dense_alpha`
 to `msa_search` (or any future tool that supports it). `dense_alpha = 1.0`
