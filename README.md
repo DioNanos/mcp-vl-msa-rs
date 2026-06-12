@@ -170,6 +170,10 @@ Next (not yet built):
   pure-Rust approximation of the macro pattern.
 - **Vivling** (in `codex-vl`) — the first downstream consumer: this server is
   its long-term memory.
+- **[mcp-memory-rs](https://github.com/DioNanos/mcp-memory-rs)** — the companion
+  server for *curated* agent state (named JSON categories, per-device ACL,
+  fleet sync). This server does corpus recall; together they cover both halves
+  of agent memory: the curated notebook and the queryable library.
 
 ## License
 
