@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-05-30T16:03:45Z-hotpotqa",
+  "dataset": "hotpotqa",
+  "corpus_size": 3131,
+  "num_queries": 300,
+  "model_id": "none(bm25-only)",
+  "model_version": "",
+  "profile": "bm25",
+  "index_build_ms": 683,
+  "encode_passages_ms": 683,
+  "cells": [
+    {
+      "alpha": 1.0,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.7958429158269686,
+      "mrr_at_10": 0.875267195767196,
+      "recall_at_10": 0.895,
+      "recall_at_20": 0.895,
+      "latency_p50_ms": 0,
+      "latency_p95_ms": 1
+    }
+  ]
+}

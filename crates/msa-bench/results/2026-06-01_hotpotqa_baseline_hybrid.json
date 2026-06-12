@@ -1,0 +1,163 @@
+{
+  "run_id": "2026-06-01T18:56:12Z-hotpotqa",
+  "dataset": "hotpotqa",
+  "corpus_size": 5085,
+  "num_queries": 500,
+  "model_id": "ibm-granite/granite-embedding-97m-multilingual-r2",
+  "model_version": "msa-bench",
+  "profile": "granite-r2-97m",
+  "index_build_ms": 2366558,
+  "encode_passages_ms": 2366558,
+  "cells": [
+    {
+      "alpha": 0.0,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.5235137094470755,
+      "mrr_at_10": 0.5779904761904763,
+      "recall_at_10": 0.672,
+      "recall_at_20": 0.672,
+      "latency_p50_ms": 135,
+      "latency_p95_ms": 279
+    },
+    {
+      "alpha": 0.3,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.7687735439099928,
+      "mrr_at_10": 0.8519261904761903,
+      "recall_at_10": 0.882,
+      "recall_at_20": 0.882,
+      "latency_p50_ms": 2,
+      "latency_p95_ms": 4
+    },
+    {
+      "alpha": 0.5,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.7632769038731778,
+      "mrr_at_10": 0.8485039682539679,
+      "recall_at_10": 0.877,
+      "recall_at_20": 0.877,
+      "latency_p50_ms": 2,
+      "latency_p95_ms": 3
+    },
+    {
+      "alpha": 0.7,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.762422086792109,
+      "mrr_at_10": 0.8494150793650791,
+      "recall_at_10": 0.878,
+      "recall_at_20": 0.878,
+      "latency_p50_ms": 2,
+      "latency_p95_ms": 3
+    },
+    {
+      "alpha": 1.0,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.7613683711514374,
+      "mrr_at_10": 0.8506373015873013,
+      "recall_at_10": 0.875,
+      "recall_at_20": 0.875,
+      "latency_p50_ms": 1,
+      "latency_p95_ms": 1
+    },
+    {
+      "alpha": 0.0,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.47805949878002973,
+      "mrr_at_10": 0.5399817460317461,
+      "recall_at_10": 0.603,
+      "recall_at_20": 0.603,
+      "latency_p50_ms": 106,
+      "latency_p95_ms": 195
+    },
+    {
+      "alpha": 0.3,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.7687735439099928,
+      "mrr_at_10": 0.8519261904761903,
+      "recall_at_10": 0.882,
+      "recall_at_20": 0.882,
+      "latency_p50_ms": 4,
+      "latency_p95_ms": 7
+    },
+    {
+      "alpha": 0.5,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.7632769038731778,
+      "mrr_at_10": 0.8485039682539679,
+      "recall_at_10": 0.877,
+      "recall_at_20": 0.877,
+      "latency_p50_ms": 4,
+      "latency_p95_ms": 8
+    },
+    {
+      "alpha": 0.7,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.762422086792109,
+      "mrr_at_10": 0.8494150793650791,
+      "recall_at_10": 0.878,
+      "recall_at_20": 0.878,
+      "latency_p50_ms": 5,
+      "latency_p95_ms": 8
+    },
+    {
+      "alpha": 1.0,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.7613683711514374,
+      "mrr_at_10": 0.8506373015873013,
+      "recall_at_10": 0.875,
+      "recall_at_20": 0.875,
+      "latency_p50_ms": 1,
+      "latency_p95_ms": 3
+    },
+    {
+      "alpha": 0.0,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.4517328618586761,
+      "mrr_at_10": 0.5180849206349205,
+      "recall_at_10": 0.566,
+      "recall_at_20": 0.566,
+      "latency_p50_ms": 150,
+      "latency_p95_ms": 299
+    },
+    {
+      "alpha": 0.3,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.7687735439099928,
+      "mrr_at_10": 0.8519261904761903,
+      "recall_at_10": 0.882,
+      "recall_at_20": 0.882,
+      "latency_p50_ms": 8,
+      "latency_p95_ms": 11
+    },
+    {
+      "alpha": 0.5,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.7632769038731778,
+      "mrr_at_10": 0.8485039682539679,
+      "recall_at_10": 0.877,
+      "recall_at_20": 0.877,
+      "latency_p50_ms": 8,
+      "latency_p95_ms": 15
+    },
+    {
+      "alpha": 0.7,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.762422086792109,
+      "mrr_at_10": 0.8494150793650791,
+      "recall_at_10": 0.878,
+      "recall_at_20": 0.878,
+      "latency_p50_ms": 8,
+      "latency_p95_ms": 13
+    },
+    {
+      "alpha": 1.0,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.7613683711514374,
+      "mrr_at_10": 0.8506373015873013,
+      "recall_at_10": 0.875,
+      "recall_at_20": 0.875,
+      "latency_p50_ms": 2,
+      "latency_p95_ms": 4
+    }
+  ]
+}

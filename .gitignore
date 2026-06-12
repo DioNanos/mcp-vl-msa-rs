@@ -1,0 +1,7 @@
+/target
+.DS_Store
+*.swp
+*.swo
+__pycache__/
+.fastembed_cache/
+*.rows.jsonl

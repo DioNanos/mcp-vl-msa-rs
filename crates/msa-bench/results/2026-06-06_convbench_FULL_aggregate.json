@@ -1,0 +1,379 @@
+{
+ "bench": "longmemeval_s conv-bench C1-C3b",
+ "n_questions": 500,
+ "abstention_excluded": 30,
+ "params": {
+  "top_k": 10,
+  "recall_at": 5,
+  "recency_half_life_days": 30,
+  "oracle_band_slack_days": 1,
+  "bootstrap": 1000
+ },
+ "categories": {
+  "single-session-user": {
+   "n": 64,
+   "gate": true,
+   "recall5": {
+    "bm25-short": 78.1,
+    "bm25-rich": 98.4,
+    "recency": 98.4,
+    "oracle-band": 100.0
+   },
+   "coverage10": {
+    "bm25-short": 87.5,
+    "bm25-rich": 98.4,
+    "recency": 100.0,
+    "oracle-band": 100.0
+   },
+   "rich_vs_short": {
+    "delta": 20.3,
+    "ci95": [
+     10.9,
+     31.2
+    ]
+   },
+   "recency_vs_rich": {
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "oracleband_vs_rich": {
+    "delta": 1.6,
+    "ci95": [
+     0.0,
+     4.7
+    ]
+   },
+   "hybrid_recall5": 98.4,
+   "hybrid_vs_rich": {
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "multi-session": {
+   "n": 121,
+   "gate": true,
+   "recall5": {
+    "bm25-short": 82.6,
+    "bm25-rich": 93.4,
+    "recency": 93.4,
+    "oracle-band": 95.9
+   },
+   "coverage10": {
+    "bm25-short": 69.3,
+    "bm25-rich": 87.9,
+    "recency": 89.1,
+    "oracle-band": 91.8
+   },
+   "rich_vs_short": {
+    "delta": 10.7,
+    "ci95": [
+     4.1,
+     16.5
+    ]
+   },
+   "recency_vs_rich": {
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "oracleband_vs_rich": {
+    "delta": 2.5,
+    "ci95": [
+     0.0,
+     5.8
+    ]
+   },
+   "hybrid_recall5": 94.2,
+   "hybrid_vs_rich": {
+    "delta": 0.8,
+    "ci95": [
+     0.0,
+     2.5
+    ]
+   }
+  },
+  "single-session-preference": {
+   "n": 30,
+   "gate": true,
+   "recall5": {
+    "bm25-short": 66.7,
+    "bm25-rich": 63.3,
+    "recency": 60.0,
+    "oracle-band": 86.7
+   },
+   "coverage10": {
+    "bm25-short": 76.7,
+    "bm25-rich": 76.7,
+    "recency": 73.3,
+    "oracle-band": 90.0
+   },
+   "rich_vs_short": {
+    "delta": -3.3,
+    "ci95": [
+     -16.7,
+     10.0
+    ]
+   },
+   "recency_vs_rich": {
+    "delta": -3.3,
+    "ci95": [
+     -16.7,
+     6.7
+    ]
+   },
+   "oracleband_vs_rich": {
+    "delta": 23.3,
+    "ci95": [
+     10.0,
+     40.0
+    ]
+   },
+   "hybrid_recall5": 73.3,
+   "hybrid_vs_rich": {
+    "delta": 10.0,
+    "ci95": [
+     0.0,
+     23.3
+    ]
+   }
+  },
+  "temporal-reasoning": {
+   "n": 127,
+   "gate": true,
+   "recall5": {
+    "bm25-short": 84.3,
+    "bm25-rich": 93.7,
+    "recency": 94.5,
+    "oracle-band": 96.1
+   },
+   "coverage10": {
+    "bm25-short": 80.9,
+    "bm25-rich": 90.6,
+    "recency": 90.5,
+    "oracle-band": 93.6
+   },
+   "rich_vs_short": {
+    "delta": 9.4,
+    "ci95": [
+     3.9,
+     15.0
+    ]
+   },
+   "recency_vs_rich": {
+    "delta": 0.8,
+    "ci95": [
+     -1.6,
+     3.1
+    ]
+   },
+   "oracleband_vs_rich": {
+    "delta": 2.4,
+    "ci95": [
+     0.0,
+     5.5
+    ]
+   },
+   "hybrid_recall5": 94.5,
+   "hybrid_vs_rich": {
+    "delta": 0.8,
+    "ci95": [
+     0.0,
+     2.4
+    ]
+   }
+  },
+  "knowledge-update": {
+   "n": 72,
+   "gate": true,
+   "recall5": {
+    "bm25-short": 93.1,
+    "bm25-rich": 100.0,
+    "recency": 98.6,
+    "oracle-band": 100.0
+   },
+   "coverage10": {
+    "bm25-short": 84.0,
+    "bm25-rich": 97.9,
+    "recency": 92.4,
+    "oracle-band": 99.3
+   },
+   "rich_vs_short": {
+    "delta": 6.9,
+    "ci95": [
+     1.4,
+     13.9
+    ]
+   },
+   "recency_vs_rich": {
+    "delta": -1.4,
+    "ci95": [
+     -4.2,
+     0.0
+    ]
+   },
+   "oracleband_vs_rich": {
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "hybrid_recall5": 100.0,
+   "hybrid_vs_rich": {
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "single-session-assistant": {
+   "n": 56,
+   "gate": true,
+   "recall5": {
+    "bm25-short": 89.3,
+    "bm25-rich": 100.0,
+    "recency": 100.0,
+    "oracle-band": 100.0
+   },
+   "coverage10": {
+    "bm25-short": 98.2,
+    "bm25-rich": 100.0,
+    "recency": 100.0,
+    "oracle-band": 100.0
+   },
+   "rich_vs_short": {
+    "delta": 10.7,
+    "ci95": [
+     3.6,
+     19.6
+    ]
+   },
+   "recency_vs_rich": {
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "oracleband_vs_rich": {
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "hybrid_recall5": 100.0,
+   "hybrid_vs_rich": {
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   }
+  }
+ },
+ "c4_encoder": "fastembed bge-m3 in-process (deviazione: server Ollama bloccato da OLLAMA_CONTEXT_LENGTH M3)",
+ "reading_experiment": {
+  "harness": "convbench-model-in-loop (proxy deterministic-ingest)",
+  "model": "GLM-5.1",
+  "n": 600,
+  "per_category": {
+   "knowledge-update": {
+    "flat": {
+     "n": 50,
+     "f1": 0.5464
+    },
+    "structured": {
+     "n": 50,
+     "f1": 0.6559
+    },
+    "structured-now": {
+     "n": 50,
+     "f1": 0.6586
+    }
+   },
+   "multi-session": {
+    "flat": {
+     "n": 50,
+     "f1": 0.4813
+    },
+    "structured": {
+     "n": 50,
+     "f1": 0.4113
+    },
+    "structured-now": {
+     "n": 50,
+     "f1": 0.4378
+    }
+   },
+   "single-session-user": {
+    "flat": {
+     "n": 50,
+     "f1": 0.8463
+    },
+    "structured": {
+     "n": 50,
+     "f1": 0.8437
+    },
+    "structured-now": {
+     "n": 50,
+     "f1": 0.8207
+    }
+   },
+   "temporal-reasoning": {
+    "flat": {
+     "n": 50,
+     "f1": 0.3468
+    },
+    "structured": {
+     "n": 50,
+     "f1": 0.4665
+    },
+    "structured-now": {
+     "n": 50,
+     "f1": 0.5161
+    }
+   }
+  }
+ },
+ "reading_experiment_r3": {
+  "harness": "convbench-model-in-loop (proxy deterministic-ingest)",
+  "model": "GLM-5.1",
+  "n": 200,
+  "per_category": {
+   "knowledge-update": {
+    "inline-dates": {
+     "n": 50,
+     "f1": 0.6641
+    }
+   },
+   "multi-session": {
+    "inline-dates": {
+     "n": 50,
+     "f1": 0.405
+    }
+   },
+   "single-session-user": {
+    "inline-dates": {
+     "n": 50,
+     "f1": 0.8152
+    }
+   },
+   "temporal-reasoning": {
+    "inline-dates": {
+     "n": 50,
+     "f1": 0.4722
+    }
+   }
+  }
+ }
+}

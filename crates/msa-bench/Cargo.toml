@@ -1,0 +1,35 @@
+[package]
+name = "msa-bench"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "MSA-RAG-BENCHMARKS evaluator for mcp-vl-msa-rs: BM25-only vs BM25+Granite-R2 dense rerank, alpha and top-N sweeps with NDCG/MRR/Recall/latency metrics"
+
+[[bin]]
+name = "msa-rag-bench"
+path = "src/main.rs"
+required-features = ["bench"]
+
+[features]
+default = []
+# Bench needs the in-process Candle ModernBERT encoder from msa-core.
+bench = ["msa-core/embeddings-candle"]
+# Alternative encoder backend via fastembed ONNX runtime (for benchmarking
+# different models without a local Candle bundle). Independent of `bench`.
+bench-fastembed = ["fastembed"]
+# Ollama HTTP encoder backend (reuses msa-core OllamaClient, deprecated path).
+# Independent of `bench` and `bench-fastembed`.
+bench-ollama = ["msa-core/embeddings-ollama"]
+
+[dependencies]
+msa-core = { path = "../msa-core", features = ["embeddings-candle"] }
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+clap = { version = "4", features = ["derive"] }
+ureq = { version = "2", features = ["json"] }
+tempfile = "3"
+fastembed = { version = "5", optional = true }

@@ -1,0 +1,63 @@
+{
+ "harness": "convbench-model-in-loop (proxy deterministic-ingest)",
+ "model": "GLM-5.1",
+ "n": 600,
+ "per_category": {
+  "knowledge-update": {
+   "flat": {
+    "n": 50,
+    "f1": 0.5464
+   },
+   "structured": {
+    "n": 50,
+    "f1": 0.6559
+   },
+   "structured-now": {
+    "n": 50,
+    "f1": 0.6586
+   }
+  },
+  "multi-session": {
+   "flat": {
+    "n": 50,
+    "f1": 0.4813
+   },
+   "structured": {
+    "n": 50,
+    "f1": 0.4113
+   },
+   "structured-now": {
+    "n": 50,
+    "f1": 0.4378
+   }
+  },
+  "single-session-user": {
+   "flat": {
+    "n": 50,
+    "f1": 0.8463
+   },
+   "structured": {
+    "n": 50,
+    "f1": 0.8437
+   },
+   "structured-now": {
+    "n": 50,
+    "f1": 0.8207
+   }
+  },
+  "temporal-reasoning": {
+   "flat": {
+    "n": 50,
+    "f1": 0.3468
+   },
+   "structured": {
+    "n": 50,
+    "f1": 0.4665
+   },
+   "structured-now": {
+    "n": 50,
+    "f1": 0.5161
+   }
+  }
+ }
+}

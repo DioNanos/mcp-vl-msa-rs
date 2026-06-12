@@ -1,0 +1,163 @@
+{
+  "run_id": "2026-06-01T19:33:29Z-2wikimultihopqa",
+  "dataset": "2wikimultihopqa",
+  "corpus_size": 5000,
+  "num_queries": 500,
+  "model_id": "ibm-granite/granite-embedding-97m-multilingual-r2",
+  "model_version": "msa-bench",
+  "profile": "granite-r2-97m",
+  "index_build_ms": 1969713,
+  "encode_passages_ms": 1969713,
+  "cells": [
+    {
+      "alpha": 0.0,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.35879589709230564,
+      "mrr_at_10": 0.46962222222222205,
+      "recall_at_10": 0.454,
+      "recall_at_20": 0.454,
+      "latency_p50_ms": 116,
+      "latency_p95_ms": 233
+    },
+    {
+      "alpha": 0.3,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.6925504358449284,
+      "mrr_at_10": 0.9031857142857141,
+      "recall_at_10": 0.698,
+      "recall_at_20": 0.698,
+      "latency_p50_ms": 2,
+      "latency_p95_ms": 3
+    },
+    {
+      "alpha": 0.5,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.689710489040082,
+      "mrr_at_10": 0.9016269841269839,
+      "recall_at_10": 0.695,
+      "recall_at_20": 0.695,
+      "latency_p50_ms": 2,
+      "latency_p95_ms": 2
+    },
+    {
+      "alpha": 0.7,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.6896146699018465,
+      "mrr_at_10": 0.9028936507936508,
+      "recall_at_10": 0.6945,
+      "recall_at_20": 0.6945,
+      "latency_p50_ms": 2,
+      "latency_p95_ms": 2
+    },
+    {
+      "alpha": 1.0,
+      "topn_rerank": 20,
+      "ndcg_at_10": 0.6890690173512962,
+      "mrr_at_10": 0.9025603174603174,
+      "recall_at_10": 0.6955,
+      "recall_at_20": 0.6955,
+      "latency_p50_ms": 0,
+      "latency_p95_ms": 1
+    },
+    {
+      "alpha": 0.0,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.29089513963563873,
+      "mrr_at_10": 0.39153095238095226,
+      "recall_at_10": 0.3655,
+      "recall_at_20": 0.3655,
+      "latency_p50_ms": 147,
+      "latency_p95_ms": 297
+    },
+    {
+      "alpha": 0.3,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.6925504358449284,
+      "mrr_at_10": 0.9031857142857141,
+      "recall_at_10": 0.698,
+      "recall_at_20": 0.698,
+      "latency_p50_ms": 4,
+      "latency_p95_ms": 6
+    },
+    {
+      "alpha": 0.5,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.689710489040082,
+      "mrr_at_10": 0.9016269841269839,
+      "recall_at_10": 0.695,
+      "recall_at_20": 0.695,
+      "latency_p50_ms": 4,
+      "latency_p95_ms": 10
+    },
+    {
+      "alpha": 0.7,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.6896146699018465,
+      "mrr_at_10": 0.9028936507936508,
+      "recall_at_10": 0.6945,
+      "recall_at_20": 0.6945,
+      "latency_p50_ms": 4,
+      "latency_p95_ms": 6
+    },
+    {
+      "alpha": 1.0,
+      "topn_rerank": 50,
+      "ndcg_at_10": 0.6890690173512962,
+      "mrr_at_10": 0.9025603174603174,
+      "recall_at_10": 0.6955,
+      "recall_at_20": 0.6955,
+      "latency_p50_ms": 1,
+      "latency_p95_ms": 2
+    },
+    {
+      "alpha": 0.0,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.25575546390804155,
+      "mrr_at_10": 0.3516642857142858,
+      "recall_at_10": 0.314,
+      "recall_at_20": 0.314,
+      "latency_p50_ms": 153,
+      "latency_p95_ms": 298
+    },
+    {
+      "alpha": 0.3,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.6925504358449284,
+      "mrr_at_10": 0.9031857142857141,
+      "recall_at_10": 0.698,
+      "recall_at_20": 0.698,
+      "latency_p50_ms": 8,
+      "latency_p95_ms": 15
+    },
+    {
+      "alpha": 0.5,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.689710489040082,
+      "mrr_at_10": 0.9016269841269839,
+      "recall_at_10": 0.695,
+      "recall_at_20": 0.695,
+      "latency_p50_ms": 8,
+      "latency_p95_ms": 16
+    },
+    {
+      "alpha": 0.7,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.6896146699018465,
+      "mrr_at_10": 0.9028936507936508,
+      "recall_at_10": 0.6945,
+      "recall_at_20": 0.6945,
+      "latency_p50_ms": 8,
+      "latency_p95_ms": 21
+    },
+    {
+      "alpha": 1.0,
+      "topn_rerank": 100,
+      "ndcg_at_10": 0.6890690173512962,
+      "mrr_at_10": 0.9025603174603174,
+      "recall_at_10": 0.6955,
+      "recall_at_20": 0.6955,
+      "latency_p50_ms": 2,
+      "latency_p95_ms": 3
+    }
+  ]
+}

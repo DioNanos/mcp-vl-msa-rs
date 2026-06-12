@@ -1,0 +1,23 @@
+{
+ "harness": "convbench-model-in-loop (proxy deterministic-ingest)",
+ "model": "GLM-5.1",
+ "n": 199,
+ "per_category": {
+  "knowledge-update": {
+   "n": 50,
+   "f1": 0.5374
+  },
+  "multi-session": {
+   "n": 50,
+   "f1": 0.414
+  },
+  "single-session-user": {
+   "n": 50,
+   "f1": 0.8362
+  },
+  "temporal-reasoning": {
+   "n": 49,
+   "f1": 0.3606
+  }
+ }
+}

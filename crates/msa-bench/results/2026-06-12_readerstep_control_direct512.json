@@ -1,0 +1,35 @@
+{
+ "harness": "convbench-model-in-loop (proxy deterministic-ingest)",
+ "model": "GLM-5.1",
+ "n": 200,
+ "ask_mode": "direct",
+ "max_tokens": 512,
+ "final_parse_miss": 0,
+ "final_parse_miss_rate": 0.0,
+ "per_category": {
+  "knowledge-update": {
+   "flat": {
+    "n": 50,
+    "f1": 0.5711
+   }
+  },
+  "multi-session": {
+   "flat": {
+    "n": 50,
+    "f1": 0.4733
+   }
+  },
+  "single-session-user": {
+   "flat": {
+    "n": 50,
+    "f1": 0.8421
+   }
+  },
+  "temporal-reasoning": {
+   "flat": {
+    "n": 50,
+    "f1": 0.3647
+   }
+  }
+ }
+}

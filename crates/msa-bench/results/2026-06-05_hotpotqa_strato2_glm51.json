@@ -1,0 +1,22 @@
+{
+  "gate": "strato2-model-in-loop",
+  "evidence_file": "/tmp/strato2_evidence_hotpotqa.jsonl",
+  "model": "GLM-5.1",
+  "base_url": "https://api.z.ai/api/anthropic",
+  "temperature": 0,
+  "num_scored": 200,
+  "f1_c": 0.647778449149417,
+  "f1_d": 0.6372539181248859,
+  "delta_points": 1.0524531024531103,
+  "em_c": 0.53,
+  "em_d": 0.52,
+  "acceptance_rule": "F1(C) > F1(D) + 5 points",
+  "passed": false,
+  "both_present_stratum": {
+    "n": 148,
+    "f1_c": 0.784840129598194,
+    "f1_d": 0.7804311751892397,
+    "delta_points": 0.4408954408954391
+  },
+  "note": "Strong generator (GLM-5.1) compresses the C-D gap via parametric knowledge; treat delta as a conservative floor of the paper's -37% lever, complementing the deterministic presence gate. The both_present_stratum isolates 'answers worse from fragments even when the answer is present'."
+}

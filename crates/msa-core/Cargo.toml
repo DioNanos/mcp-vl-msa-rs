@@ -1,0 +1,50 @@
+[package]
+name = "msa-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "MSA-flavor retrieval engine library: chunking, tantivy BM25, and optional dense rerank"
+
+[features]
+default = []
+# Production default for dense rerank: in-process Candle ModernBERT
+# (granite-r2-97m-multilingual). No external daemon, no network at runtime.
+embeddings = ["embeddings-candle"]
+embeddings-candle = [
+    "dep:candle-core",
+    "dep:candle-nn",
+    "dep:candle-transformers",
+    "dep:tokenizers",
+    "dep:safetensors",
+]
+# Deprecated transitional backend: HTTP to an Ollama-compatible server.
+# Kept for one release for downstream that still wire their own backend.
+# To remove in v0.6+.
+embeddings-ollama = ["dep:reqwest"]
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+blake3.workspace = true
+chrono.workspace = true
+schemars.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+tantivy = "0.22"
+unicode-segmentation = "1"
+toml = "0.8"
+uuid = { version = "1", features = ["v4", "serde"] }
+candle-core = { version = "0.9", optional = true }
+candle-nn = { version = "0.9", optional = true }
+candle-transformers = { version = "0.9", optional = true }
+tokenizers = { version = "0.20", optional = true, default-features = false, features = ["onig"] }
+safetensors = { version = "0.4", optional = true }
+reqwest = { version = "0.12", optional = true, default-features = false, features = ["json", "rustls-tls", "blocking"] }
+
+[[bin]]
+name = "granite-smoke"
+path = "src/bin/granite_smoke.rs"
+required-features = ["embeddings-candle"]
+
+[dev-dependencies]
+tempfile = "3"

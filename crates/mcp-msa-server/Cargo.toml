@@ -1,0 +1,43 @@
+[package]
+name = "mcp-msa-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "mcp-vl-msa: MSA-flavor retrieval/memory MCP server (Vivling-first, reusable)"
+
+[lib]
+name = "mcp_msa_server"
+path = "src/lib.rs"
+
+[[bin]]
+name = "mcp-vl-msa-rs"
+path = "src/main.rs"
+
+[features]
+default = []
+# Production default: in-process Candle ModernBERT (granite-r2-97m).
+embeddings = ["embeddings-candle"]
+embeddings-candle = ["msa-core/embeddings-candle"]
+# Deprecated transitional HTTP backend; removed in v0.6.
+embeddings-ollama = ["msa-core/embeddings-ollama"]
+# Filesystem source adapter: the `msa_sync_path` turnkey directory mirror.
+# Off by default so the core engine stays minimal and source-agnostic.
+source-fs = ["dep:walkdir", "dep:globset"]
+
+[dependencies]
+msa-core = { path = "../msa-core" }
+rmcp = { version = "1.3", features = ["server", "macros", "transport-io"] }
+tokio = { version = "1", features = ["full"] }
+serde.workspace = true
+serde_json.workspace = true
+schemars.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+chrono.workspace = true
+uuid = { version = "1", features = ["v4", "serde"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+walkdir = { version = "2", optional = true }
+globset = { version = "0.4", optional = true }
+
+[dev-dependencies]
+tempfile = "3"
