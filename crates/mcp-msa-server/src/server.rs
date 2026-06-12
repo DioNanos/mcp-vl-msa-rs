@@ -1137,9 +1137,17 @@ impl ServerHandler for MsaServer {
                 env!("CARGO_PKG_VERSION"),
             ))
             .with_instructions(
-                "MSA-flavor retrieval engine. Index documents into collections and \
-                 retrieve top-k chunks. Use msa_fetch_doc after msa_search for the \
-                 MSA-style 'original text injection' pattern.",
+                "Durable, searchable long-term memory for an AI agent, over MCP. \
+                 Index documents, notes or past conversations into named collections \
+                 (msa_index / msa_index_batch); retrieve the top-k relevant chunks for \
+                 a query with msa_search, then call msa_fetch_doc to inject the full \
+                 original text back to the model — the chunks locate, the document \
+                 grounds. Use msa_remember / msa_forget to manage standalone agent \
+                 memories (dedup + low-signal gate). For multi-hop questions, \
+                 msa_interleave_round runs one bounded route->dedup->read step you can \
+                 repeat. BM25 by default, no embeddings; pass dense_alpha on msa_search \
+                 only when the server is built and configured for hybrid rerank. \
+                 Collections persist on disk across sessions.",
             )
     }
 }
