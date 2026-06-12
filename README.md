@@ -137,7 +137,35 @@ Example `~/.codex/config.toml` entry:
 [mcp_servers.vl_msa]
 command = "/path/to/mcp-vl-msa-rs/target/release/mcp-vl-msa-rs"
 env = { MCP_DEVICE = "my-node" }
+# let the model call tools without a per-call approval prompt
+default_tools_approval_mode = "approve"
 ```
+
+Equivalent `~/.claude.json` entry for Claude Code:
+
+```json
+{
+  "mcpServers": {
+    "vl_msa": {
+      "command": "/path/to/mcp-vl-msa-rs/target/release/mcp-vl-msa-rs",
+      "env": { "MCP_DEVICE": "my-node" }
+    }
+  }
+}
+```
+
+### AI client compatibility
+
+- Clients with partial MCP support may not surface the server's `instructions`
+  text. The tool descriptions and request-field descriptions are self-contained,
+  so a model can work from those alone.
+- Read-only tools (`msa_search`, `msa_fetch_doc`, `msa_stats`,
+  `msa_list_collections`, `msa_manifest`, `msa_search_iterative`,
+  `msa_interleave_round`) carry the `readOnlyHint` annotation, which lets a
+  gating client auto-approve them.
+- If a model reports an "unsupported call" or "user cancelled" on codex, that is
+  the approval gate, not a server fault — set `default_tools_approval_mode`
+  (above) so tool calls are not blocked on a prompt.
 
 ## Storage layout
 
