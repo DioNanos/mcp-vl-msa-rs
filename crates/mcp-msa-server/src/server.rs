@@ -437,6 +437,11 @@ impl MsaServer {
         Parameters(p): Parameters<SearchParams>,
     ) -> std::result::Result<CallToolResult, McpError> {
         msa_core::validate::validate_query(&p.query).map_err(bad_input)?;
+        // Snapshot the existing collections BEFORE opening: open_or_create lazily
+        // creates the directory, so this is the only point where we can still tell
+        // a first-touch (never-indexed) collection apart from an existing one.
+        let known_before = self.registry.list_on_disk(&self.config.storage.storage_dir);
+        let existed = known_before.iter().any(|c| c == &p.collection);
         let idx = self
             .registry
             .open_or_create_with_heap(
@@ -456,6 +461,13 @@ impl MsaServer {
                 &Default::default(),
             )
             .map_err(internal)?;
+        // Teach weak clients: an empty result against a collection that did not
+        // exist is almost always a typo'd or not-yet-indexed name, not "no data".
+        // The hint is purely additive and only present in this one case.
+        if hits.is_empty() && !existed {
+            let hint = crate::hint::missing_collection_hint(&p.collection, &known_before);
+            return Ok(ok_json(serde_json::json!({ "hits": hits, "hint": hint })));
+        }
         Ok(ok_json(serde_json::json!({ "hits": hits })))
     }
 
@@ -1382,6 +1394,53 @@ mod tests {
             .await
             .expect_err("empty query must error");
         assert_eq!(code(&err), ErrorCode::INVALID_PARAMS);
+    }
+
+    #[tokio::test]
+    async fn search_missing_collection_returns_teaching_hint() {
+        let s = server();
+        // Create one real collection so the hint can list an existing name.
+        index_doc(&s, "real", "d1", "hello world from the real collection").await;
+
+        let v = result_json(
+            &s.msa_search(Parameters(SearchParams {
+                collection: "ghost".into(),
+                query: "anything".into(),
+                top_k: 5,
+                filter: None,
+                dense_alpha: None,
+            }))
+            .await
+            .expect("search ok"),
+        );
+        assert!(v["hits"].as_array().unwrap().is_empty());
+        let hint = v["hint"].as_str().expect("missing collection must hint");
+        assert!(hint.contains("'ghost' does not exist"), "hint: {hint}");
+        assert!(hint.contains("real"), "hint should list existing: {hint}");
+        assert!(hint.contains("msa_index"), "hint: {hint}");
+    }
+
+    #[tokio::test]
+    async fn search_existing_collection_empty_hits_has_no_hint() {
+        let s = server();
+        index_doc(&s, "docs", "d1", "the quick brown fox").await;
+        // Query that matches nothing in an existing collection: no hint.
+        let v = result_json(
+            &s.msa_search(Parameters(SearchParams {
+                collection: "docs".into(),
+                query: "zzzznonexistenttermzzzz".into(),
+                top_k: 5,
+                filter: None,
+                dense_alpha: None,
+            }))
+            .await
+            .expect("search ok"),
+        );
+        assert!(v["hits"].as_array().unwrap().is_empty());
+        assert!(
+            v.get("hint").is_none(),
+            "existing-but-empty collection must stay silent: {v}"
+        );
     }
 
     // ---- A5.3 msa_interleave_round ----------------------------------------
