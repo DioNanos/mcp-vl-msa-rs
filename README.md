@@ -69,10 +69,6 @@ cargo install --git https://github.com/DioNanos/mcp-vl-msa-rs \
   --locked --features source-fs mcp-msa-server
 ```
 
-**Nix** — the server is also packaged as a NixOS module in the
-[Lararium](https://github.com/DioNanos) hosting stack (for user-owned
-assistant nodes). _Coming with the Lararium flake._
-
 ## Build & test
 
 ```bash
