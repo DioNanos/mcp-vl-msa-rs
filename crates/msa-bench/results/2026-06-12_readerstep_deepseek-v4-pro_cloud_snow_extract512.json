@@ -1,0 +1,35 @@
+{
+ "harness": "convbench-model-in-loop (proxy deterministic-ingest)",
+ "model": "deepseek-v4-pro:cloud",
+ "n": 200,
+ "ask_mode": "extract",
+ "max_tokens": 4096,
+ "final_parse_miss": 20,
+ "final_parse_miss_rate": 0.1,
+ "per_category": {
+  "knowledge-update": {
+   "structured-now": {
+    "n": 50,
+    "f1": 0.5818
+   }
+  },
+  "multi-session": {
+   "structured-now": {
+    "n": 50,
+    "f1": 0.5224
+   }
+  },
+  "single-session-user": {
+   "structured-now": {
+    "n": 50,
+    "f1": 0.7898
+   }
+  },
+  "temporal-reasoning": {
+   "structured-now": {
+    "n": 50,
+    "f1": 0.5322
+   }
+  }
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "harness": "convbench-model-in-loop (proxy deterministic-ingest)",
+ "model": "kimi-k2.6:cloud",
+ "n": 200,
+ "ask_mode": "direct",
+ "max_tokens": 4096,
+ "final_parse_miss": 0,
+ "final_parse_miss_rate": 0.0,
+ "per_category": {
+  "knowledge-update": {
+   "flat": {
+    "n": 50,
+    "f1": 0.6198
+   }
+  },
+  "multi-session": {
+   "flat": {
+    "n": 50,
+    "f1": 0.5147
+   }
+  },
+  "single-session-user": {
+   "flat": {
+    "n": 50,
+    "f1": 0.8364
+   }
+  },
+  "temporal-reasoning": {
+   "flat": {
+    "n": 50,
+    "f1": 0.3537
+   }
+  }
+ }
+}

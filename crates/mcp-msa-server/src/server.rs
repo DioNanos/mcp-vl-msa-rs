@@ -429,7 +429,8 @@ impl MsaServer {
     }
 
     #[tool(
-        description = "Top-k chunk retrieval over a collection (BM25, score normalized 0.0-1.0)."
+        description = "Top-k chunk retrieval over a collection (BM25, score normalized 0.0-1.0).",
+        annotations(read_only_hint = true)
     )]
     pub async fn msa_search(
         &self,
@@ -459,7 +460,8 @@ impl MsaServer {
     }
 
     #[tool(
-        description = "Fetch the full original text of a document (MSA-style original text injection, paper §4.3)."
+        description = "Fetch the full original text of a document (MSA-style original text injection, paper §4.3).",
+        annotations(read_only_hint = true)
     )]
     pub async fn msa_fetch_doc(
         &self,
@@ -500,7 +502,8 @@ impl MsaServer {
 
     #[tool(
         description = "List all collections, including ones persisted on disk from previous runs \
-                       (not only those already open in this process)."
+                       (not only those already open in this process).",
+        annotations(read_only_hint = true)
     )]
     pub async fn msa_list_collections(
         &self,
@@ -538,7 +541,8 @@ impl MsaServer {
                        which is stateless and does the full Memory Interleave round (route+dedup+fetch+inject). \
                        Kept for backward compatibility; will be removed in a future major. Pass session_id from \
                        a previous response to exclude chunks already shown; supply the next round's query \
-                       yourself. Stop when exhausted=true. Sessions expire after ~10 minutes of idle."
+                       yourself. Stop when exhausted=true. Sessions expire after ~10 minutes of idle.",
+        annotations(read_only_hint = true, idempotent_hint = false)
     )]
     pub async fn msa_search_iterative(
         &self,
@@ -623,7 +627,8 @@ impl MsaServer {
                        not speed: marginal_gain_chars falls by construction and a rising dedup_ratio only \
                        signals a collapsing candidate pool — on a multi-hop task do not stop at low_gain / \
                        dedup hints until you have seen every entity the question needs. This is the full \
-                       Memory Interleave loop that supersedes msa_search_iterative (kept for now)."
+                       Memory Interleave loop that supersedes msa_search_iterative (kept for now).",
+        annotations(read_only_hint = true, idempotent_hint = false)
     )]
     pub async fn msa_interleave_round(
         &self,
@@ -689,7 +694,10 @@ impl MsaServer {
         ))
     }
 
-    #[tool(description = "Per-collection index statistics (chunk count, disk size).")]
+    #[tool(
+        description = "Per-collection index statistics (chunk count, disk size).",
+        annotations(read_only_hint = true)
+    )]
     pub async fn msa_stats(
         &self,
         Parameters(p): Parameters<StatsParams>,
@@ -715,7 +723,8 @@ impl MsaServer {
                        then resend only changed/new docs (msa_sync_delta) and delete the missing ones. \
                        total_count and manifest_digest cover the whole filtered scope; pass manifest_digest \
                        back as msa_sync_delta's if_manifest_digest for optimistic concurrency. Page via \
-                       cursor (last doc_id of the previous page); limit clamped to [1,5000], default 1000."
+                       cursor (last doc_id of the previous page); limit clamped to [1,5000], default 1000.",
+        annotations(read_only_hint = true)
     )]
     pub async fn msa_manifest(
         &self,
