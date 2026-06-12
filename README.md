@@ -1,14 +1,23 @@
 # mcp-vl-msa-rs
 
-MSA-flavor retrieval/memory engine, exposed as an MCP stdio server. Pure Rust,
-BM25 over [tantivy](https://github.com/quickwit-oss/tantivy), zero ML deps in the
-default build; optional in-process dense rerank. Vivling-first (the long-term
-memory for `codex-vl` Vivling) but a reusable, AI-agnostic memory/RAG server.
+A searchable long-term memory for AI agents, exposed as an MCP stdio server.
+Index documents, notes and past conversations into collections; retrieve the
+top-k relevant chunks for a query and inject the original text back to the
+model; add or drop agent memories with `msa_remember` / `msa_forget`. Pure
+Rust, BM25 over [tantivy](https://github.com/quickwit-oss/tantivy), zero ML
+deps in the default build; optional in-process dense rerank.
 
-The name: `vl` ties it to the Vivling / codex-vl family (its first consumer);
-`msa` is the retrieval pattern it borrows from the Memory Sparse Attention paper
-(arXiv:2603.23516) — an *extrinsic* approximation, not the neural model. Distinct
-from MiniMax's MSA-architecture LLMs, which are *intrinsic* (in-model) generators.
+Any MCP client (Claude Code, Codex, or anything speaking MCP stdio) gets the
+same memory: a queryable corpus that survives across sessions and model swaps,
+with no cloud account and no embedding service required. Use it to give an
+agent durable recall over a knowledge base, a docs tree, or its own chat
+history — retrieval that returns the original text, not just embeddings.
+
+**The name**: `msa` is the retrieval pattern it borrows from the Memory Sparse
+Attention paper (arXiv:2603.23516) — an *extrinsic* approximation, not the
+neural model; distinct from MiniMax's MSA-architecture LLMs, which are
+*intrinsic* (in-model) generators. `vl` is for Vivling (`codex-vl`), its first
+adopter — but the server is fully AI-agnostic and depends on nothing from it.
 
 **Status**: v0.4 — hybrid sparse+dense optional.
 
