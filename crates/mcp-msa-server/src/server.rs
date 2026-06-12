@@ -54,9 +54,13 @@ pub struct MsaServer {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct IndexParams {
+    /// Collection name; created on first msa_index. Persists on disk across sessions.
     pub collection: String,
+    /// Stable document id. Re-indexing the same doc_id replaces its chunks.
     pub doc_id: String,
+    /// Full document text to chunk and index.
     pub text: String,
+    /// Optional free-form metadata stored on the document (searchable via filter).
     #[serde(default)]
     pub metadata: Option<serde_json::Map<String, serde_json::Value>>,
 }
@@ -64,8 +68,11 @@ pub struct IndexParams {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SearchParams {
+    /// Collection to search; created (empty) on first touch if absent.
     pub collection: String,
+    /// Natural-language or keyword query (tantivy/BM25 syntax).
     pub query: String,
+    /// Max chunks to return (clamped server-side). Default 16.
     #[serde(default = "default_top_k")]
     pub top_k: usize,
     /// Optional pre-retrieval filter on document metadata and created_at.
@@ -86,20 +93,25 @@ fn default_top_k() -> usize {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct FetchDocParams {
+    /// Collection holding the document.
     pub collection: String,
+    /// Document id to fetch the full original text for (from a msa_search hit).
     pub doc_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DeleteParams {
+    /// Collection holding the document.
     pub collection: String,
+    /// Document id to remove (deletes all of its chunks).
     pub doc_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct StatsParams {
+    /// Collection to report statistics for.
     pub collection: String,
 }
 
@@ -107,6 +119,7 @@ pub struct StatsParams {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ManifestParams {
+    /// Collection to fingerprint.
     pub collection: String,
     /// Only list docs whose stored `source_id` equals this (scope a sync).
     #[serde(default)]
@@ -125,14 +138,18 @@ pub struct ManifestParams {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DropCollectionParams {
+    /// Collection to delete entirely from disk (irreversible).
     pub collection: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SearchIterativeParams {
+    /// Collection to search.
     pub collection: String,
+    /// Query for this round (you reformulate it each round).
     pub query: String,
+    /// Max chunks per round (clamped server-side). Default 16.
     #[serde(default = "default_top_k")]
     pub top_k: usize,
     /// `None` starts a new session; pass the returned `session_id` on
@@ -146,6 +163,7 @@ pub struct SearchIterativeParams {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DropSessionParams {
+    /// Session id returned by a previous msa_search_iterative call.
     pub session_id: String,
 }
 
@@ -153,8 +171,11 @@ pub struct DropSessionParams {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DocInput {
+    /// Stable document id (replaces any existing chunks for the same id).
     pub doc_id: String,
+    /// Full document text to chunk and index.
     pub text: String,
+    /// Optional free-form metadata stored on the document.
     #[serde(default)]
     pub metadata: Option<serde_json::Map<String, serde_json::Value>>,
 }
@@ -163,6 +184,7 @@ pub struct DocInput {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SyncDeltaParams {
+    /// Target collection; created on first touch.
     pub collection: String,
     /// Scope tag stored on each upserted doc; also scopes deletes
     /// (a scoped delete never evicts another source's docs) and the
@@ -189,11 +211,15 @@ pub struct SyncDeltaParams {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct IndexBatchParams {
+    /// Target collection; created on first touch.
     pub collection: String,
+    /// Optional scope tag stored on every doc in this batch.
     #[serde(default)]
     pub source_id: Option<String>,
+    /// Skip docs already indexed with the same content + index profile.
     #[serde(default = "default_skip_unchanged")]
     pub skip_unchanged: bool,
+    /// Documents to upsert in one atomic commit.
     #[serde(default)]
     pub docs: Vec<DocInput>,
 }
@@ -202,10 +228,12 @@ pub struct IndexBatchParams {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DeleteBatchParams {
+    /// Collection to delete documents from.
     pub collection: String,
     /// If set, a doc whose stored `source_id` differs is NOT deleted.
     #[serde(default)]
     pub source_id: Option<String>,
+    /// Document ids to delete (missing ids are counted, not an error).
     #[serde(default)]
     pub doc_ids: Vec<String>,
 }
@@ -219,6 +247,7 @@ fn default_skip_unchanged() -> bool {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SyncPathParams {
+    /// Target collection to mirror the directory into; created on first touch.
     pub collection: String,
     /// Directory to mirror; must canonicalize to under a configured allowed_root.
     pub path: String,
@@ -256,6 +285,7 @@ pub struct SyncPathParams {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct InterleaveRoundParams {
+    /// Collection to run the Memory Interleave round over.
     pub collection: String,
     /// The query for THIS round. The client reformulates it each round; the
     /// server does not rewrite it.
@@ -264,16 +294,22 @@ pub struct InterleaveRoundParams {
     /// returned by the previous round (stateless round-trip, design D1).
     #[serde(default)]
     pub state: Option<InterleaveStateV1>,
+    /// Chunks retrieved this round before dedup. Omit for the server default.
     #[serde(default)]
     pub top_k: Option<usize>,
+    /// How many top docs to fetch full original text for. Omit for the default.
     #[serde(default)]
     pub fetch_top_n: Option<usize>,
+    /// Per-document char cap on injected original text. Omit for the default.
     #[serde(default)]
     pub max_chars_per_doc: Option<usize>,
+    /// Total char budget for injected text this round. Omit for the default.
     #[serde(default)]
     pub max_total_chars: Option<usize>,
+    /// Advisory ceiling on rounds (the client still owns the stop decision).
     #[serde(default)]
     pub max_rounds: Option<u32>,
+    /// New-chars-per-round threshold that flips the low_gain stop hint.
     #[serde(default)]
     pub low_gain_threshold: Option<f32>,
     /// BM25 weight in `[0.0, 1.0]`. `1.0`/omitted is BM25-only; `< 1.0`
