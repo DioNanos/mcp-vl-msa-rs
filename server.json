@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.dionanos/mcp-vl-msa-rs",
+  "name": "io.github.DioNanos/mcp-vl-msa-rs",
   "title": "mcp-vl-msa-rs",
   "description": "Searchable agent memory: BM25 corpus recall, original-text injection, remember/forget capsules.",
   "version": "0.4.1",
