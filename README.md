@@ -1,5 +1,11 @@
 # mcp-vl-msa-rs
 
+[![CI](https://img.shields.io/github/actions/workflow/status/DioNanos/mcp-vl-msa-rs/ci.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=CI)](https://github.com/DioNanos/mcp-vl-msa-rs/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-203%20passing-2ea44f?style=flat-square)](https://github.com/DioNanos/mcp-vl-msa-rs/actions/workflows/ci.yml)
+[![Benchmarks](https://img.shields.io/badge/benchmarks-pre--registered%20gates-8a2be2?style=flat-square)](docs/NEGATIVE_RESULTS.md)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue?style=flat-square)](LICENSE)
+[![Rust](https://img.shields.io/badge/rust-stable-orange?style=flat-square&logo=rust)](https://www.rust-lang.org)
+
 A searchable long-term memory for AI agents, exposed as an MCP stdio server.
 Index documents, notes and past conversations into collections; retrieve the
 top-k relevant chunks for a query and inject the original text back to the
@@ -44,6 +50,34 @@ The original [Memory Sparse Attention](https://arxiv.org/abs/2603.23516) paper (
 4. **Memory Interleave** as a *protocol* (planned v0.4): the AI client orchestrates multi-hop retrieval through repeated tool calls with a server-side cursor.
 
 Design and rationale are documented in the project notes (negative results, gate methodology); see [`docs/NEGATIVE_RESULTS.md`](docs/NEGATIVE_RESULTS.md).
+
+## Benchmarks
+
+Retrieval changes are decided on **pre-registered, paired deltas** with
+bootstrap confidence intervals — not on absolute scores. Workloads: HotpotQA
+(extractive QA), MLDR-it (long-doc retrieval, Italian), LongMemEval-S (500
+conversational-memory questions). Full methodology, acceptance gates and
+*refuted* hypotheses live in [`docs/NEGATIVE_RESULTS.md`](docs/NEGATIVE_RESULTS.md).
+
+Headline measurements:
+
+- **BM25 is the engine, not a placeholder.** Three pre-registered attempts; no
+  hybrid (BM25 + dense rerank) configuration beat the gate on these workloads.
+  Dense rerank stays available (`dense_alpha`, off by default) for re-testing as
+  encoders improve.
+- **Rich capsules at ingestion** (deterministic enrich, no LLM): **+7 to +20
+  recall@5** across every category.
+- **Original-text injection** (`msa_fetch_doc` after `msa_search`): **+14.6 F1**
+  exactly on the stratum where snippets miss the content.
+- **Recency priors lose** — handle time at serving, not in the retrieval score.
+
+Reproduce:
+
+```bash
+crates/msa-bench/scripts/download-bench-datasets.sh   # fetch datasets
+scripts/run-baseline-bench.sh                         # BM25 vs BM25+dense sweep
+# results land under crates/msa-bench/results/ as JSON
+```
 
 ## Tool surface
 
