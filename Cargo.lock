@@ -2069,7 +2069,7 @@ dependencies = [
 
 [[package]]
 name = "mcp-msa-server"
-version = "0.4.1"
+version = "0.4.2"
 dependencies = [
  "anyhow",
  "chrono",
@@ -2180,7 +2180,7 @@ dependencies = [
 
 [[package]]
 name = "msa-bench"
-version = "0.4.1"
+version = "0.4.2"
 dependencies = [
  "anyhow",
  "chrono",
@@ -2197,7 +2197,7 @@ dependencies = [
 
 [[package]]
 name = "msa-core"
-version = "0.4.1"
+version = "0.4.2"
 dependencies = [
  "blake3",
  "candle-core",

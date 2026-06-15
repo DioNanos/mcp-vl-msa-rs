@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.2]
+
+Packaging and docs. No functional or API changes.
+
+### Added
+
+- Status badges (CI, tests, benchmarks) and a reproducible **Benchmarks**
+  section in the README, surfacing the pre-registered evaluation in
+  `docs/NEGATIVE_RESULTS.md`.
+
 ## [0.4.1]
 
 AI-first discoverability: make the server self-explanatory to MCP clients with
